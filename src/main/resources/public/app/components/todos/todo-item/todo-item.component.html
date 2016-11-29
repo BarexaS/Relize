@@ -1,0 +1,15 @@
+<div class="ui raised segment" id="seg">
+    <div class="ui checkbox" id="check">
+        <div style="float: left; width: 85%;">
+            <input type="checkbox" (change)="toggle()" [checked]="todo.done">
+            <label [ngClass]="{done: todo.done}" (click)="toggleShow()" id="lab">{{ todo.title }}
+            <i class="caret down icon" *ngIf="!showText" (click)="toggleShow()" ></i>
+            <i class="caret up icon" *ngIf="showText" (click)="toggleShow()" ></i>
+            </label>
+        </div>
+        <button id="butt" class="ui red icon button" (click)="delete()"><i class="trash outline icon"></i></button>
+    </div>
+    <div *ngIf="showText" class="ui divider"></div>
+    <div *ngIf="showText" id="todo-text" (click)="toggleShow()">{{ todo.text }}</div>
+</div>
+

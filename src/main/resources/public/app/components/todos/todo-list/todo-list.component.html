@@ -1,0 +1,5 @@
+<div id="todos" class="ui middle aligned divided selection list" *ngIf="todos.length > 0">
+    <todo-item *ngFor="let todo of sortedTodos" [todo]="todo" (toggled)="onTodoToggled($event)"
+               (deleted)="onTodoDeleted($event)"></todo-item>
+</div>
+<h1 *ngIf="todos.length == 0">No notes found</h1>

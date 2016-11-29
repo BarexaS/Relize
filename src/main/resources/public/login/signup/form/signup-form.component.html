@@ -1,0 +1,51 @@
+<form class="ui form" id="suForm" (ngSubmit)="onSubmit()" #suForm="ngForm">
+    <div class="header" style="text-align: center">
+        Sign Up Form
+    </div>
+    <div class="required field">
+        <label>Login</label>
+        <input type="text" required placeholder="Login" name="login" [(ngModel)]="model.login" #suLoginInput="ngModel">
+        <div [hidden]="suLoginInput.valid || suLoginInput.pristine"
+             class="ui red message">Login required
+        </div>
+        <div [hidden]="!loginExist"
+             class="ui red message">Login already exist!
+        </div>
+    </div>
+    <div class="required field">
+        <label>Password</label>
+        <input type="password" required minlength="7" name="password" [(ngModel)]="model.password" placeholder="Password"
+               #suPassInput="ngModel" (keyup)="repPassChanged(suPassInput.value,suPassInput2.value)">
+        <div [hidden]="!suPassInput.value==''"
+             class="ui red message">Password required
+        </div>
+        <div [hidden]="suPassInput.valid || suPassInput.pristine"
+             class="ui red message">Password must be atleast 7 chars length
+        </div>
+        <div [hidden]="!passwordTooShort"
+             class="ui red message">Password too short!
+        </div>
+    </div>
+    <div class="required field">
+        <label>Confirm password</label>
+        <input type="password" [ngClass]="confPass" required name="repPassword" placeholder="Password" [(ngModel)]="model.repPassword"
+               #suPassInput2 (keyup)="repPassChanged(suPassInput.value,suPassInput2.value)">
+        <div [hidden]="confPass=='ng-valid'" class="ui red message">
+            Confirm your password
+        </div>
+        <div [hidden]="!passwordMismatch"
+             class="ui red message">Passwords mismatch!
+        </div>
+    </div>
+    <div class="required field">
+        <label>Secret word</label>
+        <input type="text" required name="secretWord" [(ngModel)]="model.secretWord" placeholder="Secret word"
+               #suSWInput="ngModel">
+        <div [hidden]="suSWInput.valid || suSWInput.pristine"
+             class="ui red message">Secret word required
+        </div>
+    </div>
+    <div>
+        <button type="submit" class="ui green active button" [disabled]="!suForm.form.valid"><i class="user icon"></i> Sing Up </button>
+    </div>
+</form>

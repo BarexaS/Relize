@@ -1,0 +1,24 @@
+ .done {
+    text-decoration: line-through;
+}
+
+ #butt {
+    float: right;
+}
+#seg{
+    width: 100%;
+    display: inline-table;
+    word-break: normal;
+}
+#check{
+    display: inherit;
+    width: 100%;
+    vertical-align: middle;
+}
+#lab{
+    overflow-wrap: break-word;
+}
+#todo-text{
+    overflow-wrap: break-word;
+    margin-top: 0.5rem;
+}

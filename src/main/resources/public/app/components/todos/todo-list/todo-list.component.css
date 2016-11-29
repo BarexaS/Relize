@@ -1,0 +1,15 @@
+todo-item{
+    display: flex;
+    align-items: center;
+}
+
+todo-item:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: 1.5em;
+    color: #999;
+    margin-bottom: 0;
+    text-align: center;
+}

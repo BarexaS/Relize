@@ -1,0 +1,19 @@
+#suForm{
+    margin: 1rem;
+}
+.ui.green.active.button{
+    float: right;
+    margin-bottom: 1rem;
+}
+.required.field input.ng-valid{
+    border-left: 5px solid #42A948;
+}
+.required.field input.ng-invalid{
+    border-left: 5px solid #a9302d;
+}
+.ui.blue.message{
+    width: 10%;
+    position: absolute;
+    left: 89%;
+    top: 89%;
+}

@@ -1,0 +1,16 @@
+<div class="ui basic segment">
+    <button class="ui blue icon button" (click)="previousMonth()" style="float: left">
+        <i class="angle left icon"></i>
+    </button>
+    <h1>{{ date | date:'MMMM' }} of {{ date | date:'y' }}</h1>
+    <button class="ui blue icon button" (click)="nextMonth()" style="float: right">
+        <i class="angle right icon"></i>
+    </button>
+</div>
+<div class="ui relaxed grid">
+    <div class="seven column row" *ngFor="let week of weeks">
+        <div class="column" *ngFor="let day of week">
+            <day [dayTasks]="tasksForDay(day)" [day]=day [date]="date" (toggled)="taskToggled($event)" (deleted)="taskDeleted($event)"></day>
+        </div>
+    </div>
+</div>

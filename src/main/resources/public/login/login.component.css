@@ -1,0 +1,32 @@
+.ui.raised.segment {
+    width: 30%;
+    position: absolute;
+    left: 35%;
+    top: 35%;
+}
+#signUpBttn{
+    float: left;
+}
+#signInBttn{
+    float: right;
+}
+.ui.blue.message{
+    width: 10%;
+    position: absolute;
+    /*left: 89%;*/
+    right: 1%;
+    bottom: 5%;
+}
+.ui.red.message{
+    width: 10%;
+    position: absolute;
+    left: 89%;
+    top: 89%;
+}
+#singUpModal{
+    width: 30%;
+}
+.ui.modal.transition.visible.active{
+    margin-top: -18%;
+    margin-left: -15%;
+}

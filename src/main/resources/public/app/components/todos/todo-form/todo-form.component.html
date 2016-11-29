@@ -1,0 +1,9 @@
+<div class="ui segment form">
+    <div class="ui fluid action input">
+        <input type="text" name="title" placeholder="Заголовом заметки" (keyup.enter)="creat(titleInput.value,textInput.value); titleInput.value = ''; textInput.value = ''"
+            #titleInput>
+        <button type="button" class="ui primary button" (click)="creat(titleInput.value,textInput.value); titleInput.value = ''; textInput.value = ''">Добавить</button>
+    </div>
+    <div style="text-align:center;">{{ message }}</div>
+    <textarea id="textarea" name="comment" cols="40" rows="2" placeholder="Текст заметки" #textInput></textarea>
+</div>

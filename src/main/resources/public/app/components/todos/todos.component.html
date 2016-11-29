@@ -1,0 +1,10 @@
+<div id="main">
+    <div class="ui segment">
+        <div class="ui sticky">
+            <tasks></tasks>
+        </div>
+    </div>
+    <div class="ui segment" id="rightlist">
+        <todo-list [todos]="todos" (toggled)="onTodoToggled($event)" (deleted)="onTodoDeleted($event)"></todo-list>
+    </div>
+</div>

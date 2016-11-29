@@ -1,0 +1,29 @@
+<div class="ui blue segment">
+    <div class="floating ui blue label">{{ day }}</div>
+    <div *ngIf="dayTasks.length>0">
+        <a class="ui blue ribbon label" (click)="showTasks(day)">Tasks :
+            <div style="float: right">{{ dayTasks.length }}</div>
+        </a>
+    </div>
+    <div *ngIf="dayTasks.length==0">
+        <a class="ui grey ribbon label">Tasks :
+            <div style="float: right">{{ dayTasks.length }}</div>
+        </a>
+    </div>
+</div>
+<div class="ui modal" id="dayModal{{day}}">
+    <i class="close icon"></i>
+    <div class="header" style="text-align: center">
+        Tasks for {{ date | date }}
+    </div>
+    <div class="image content">
+        <div class="description">
+            <todo-list [todos]="dayTasks" (toggled)="onTaskToggled($event)" (deleted)="onTaskDeleted($event)"></todo-list>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            Close
+        </div>
+    </div>
+</div>

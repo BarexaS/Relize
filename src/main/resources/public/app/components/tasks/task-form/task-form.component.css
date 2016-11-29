@@ -1,0 +1,12 @@
+.ui.segment.form{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border: 0px;
+}
+#date{
+    float: right;
+}
+
+.ui.fluid.action.input {
+    margin-bottom: 3px;
+}

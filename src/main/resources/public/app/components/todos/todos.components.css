@@ -1,0 +1,16 @@
+.ui.segment{
+    width: 70%;
+    float: left;
+}
+#railseg{
+    width:100%;
+}
+#rightlist{
+    float: right;
+    margin-top: 0px;
+    width: 30%;
+
+}
+todo-list{
+    display: inherit;
+}

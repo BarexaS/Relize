@@ -1,0 +1,36 @@
+<div class="ui raised segment" align="center">
+    <form class="ui form">
+        <div class="field">
+            <label>Login</label>
+            <input type="text" placeholder="Login" #loginInput>
+        </div>
+        <div class="field">
+            <label>Password</label>
+            <input type="password" placeholder="Password" #passwordInput>
+        </div>
+        <div>
+            <button class="ui button" id="signInBttn" type="submit"
+                    (click)="signIn(loginInput.value, passwordInput.value)">Sign In
+            </button>
+            <button class="ui button" id="signUpBttn" type="submit" (click)="signUp()">Sign Up</button>
+        </div>
+    </form>
+</div>
+<div class="ui blue message" *ngIf="wrongInput">
+    <i class="close icon" (click)="wrongInput = !wrongInput"></i>
+    <div class="header">Wrong input!</div>
+    Inputs can't be empty
+</div>
+<div class="ui red message" *ngIf="wrongCredentials">
+    <i class="close icon" (click)="wrongCredentials = !wrongCredentials"></i>
+    <div class="header">Wrong Credentials!</div>
+</div>
+
+<div class="center">
+    <div class="ui modal" id="singUpModal">
+    <i class="close icon"></i>
+   <signup-form></signup-form>
+    </div>
+</div>
+
+
