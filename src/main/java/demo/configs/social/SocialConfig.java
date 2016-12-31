@@ -49,12 +49,12 @@ public class SocialConfig extends SocialConfigurerAdapter {
     public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig, Environment environment) {
         FacebookConnectionFactory connectionFactory =
                 new FacebookConnectionFactory(
-                        "1843982582482040",
-                        "12770211e4cf7dac1988440a9e1f03bc");
+                        "---",
+                        "---");
         cfConfig.addConnectionFactory(connectionFactory);
         cfConfig.addConnectionFactory(new VKontakteConnectionFactory(
-                "5801019",
-                "4Ivyt8O3JRcBbkE7ZzCJ"
+                "----",
+                "----"
         ));
 
 //        OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
