@@ -6,5 +6,5 @@ import demo.app.UserDTO;
 public interface UserService {
     CustomUser getUserByLogin(String login);
     Short addUser(UserDTO userDTO);
-    void updateUser(CustomUser customUser);
+    void addSocialUser(CustomUser customUser);
 }

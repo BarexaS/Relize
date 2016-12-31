@@ -28,7 +28,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(CustomUser customUser) {
+    public void addSocialUser(CustomUser customUser) {
+        addNewUserData(customUser);
         userRepository.save(customUser);
     }
 
