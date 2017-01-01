@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/node_modules/**","/systemjs.config.js","/login/**").permitAll()
                 .antMatchers("/signup").permitAll()
-                .antMatchers("/signin").permitAll()
+                .antMatchers("/signin**").permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/favicon.png").permitAll()
                 .anyRequest().authenticated()
@@ -55,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
             .apply(new SpringSocialConfigurer()
-                    .postLoginUrl("http://organizeme.tk/index.html")
+                    .postLoginUrl("http://159.203.77.168:80")
                     .alwaysUsePostLoginUrl(true));
     }
 

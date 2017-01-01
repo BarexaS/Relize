@@ -23,8 +23,8 @@ public class UsersController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private ProviderSignInUtils providerSignInUtils;
+//    @Autowired
+//    private ProviderSignInUtils providerSignInUtils;
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public Short singup(@RequestBody UserDTO userDTO) {
@@ -33,13 +33,14 @@ public class UsersController {
     }
 
 //    @RequestMapping(value = "/signup", method = RequestMethod.GET)
-//    public void singup(WebRequest request, HttpServletResponse response, Principal principal) throws IOException {
+//    public void singup(WebRequest request, HttpServletResponse response) throws IOException {
 //        Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
 //        CustomUser user = new CustomUser(connection.getDisplayName(),connection.createData().getProviderUserId(),"null", UserRole.USER);
-//        userService.updateUser(user);
+//        userService.addSocialUser(user);
 //        providerSignInUtils.doPostSignUp(user.getLogin(), request);
 //
+//        System.out.println("YOLO!!!");
+//
 //        response.sendRedirect("/index.html");
-////        return principal;
 //    }
 }
