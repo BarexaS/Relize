@@ -52,6 +52,9 @@ var LoginComponent = (function () {
         $('#singUpModal')
             .modal('show');
     };
+    LoginComponent.prototype.yolo = function () {
+        window.location.href = this.apiUrl + "/signin/facebook";
+    };
     LoginComponent = __decorate([
         core_1.Component({
             selector: 'login',

@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import org.springframework.social.security.SpringSocialConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -34,7 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/node_modules/**","/systemjs.config.js","/login/**").permitAll()
                 .antMatchers("/signup").permitAll()
-                .antMatchers("/signin**").permitAll()
+                .antMatchers("/signin/**").permitAll()
+                .antMatchers("/connect/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/favicon.png").permitAll()
                 .anyRequest().authenticated()
@@ -53,10 +53,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login.html")
                 .invalidateHttpSession(true)
                 .permitAll()
-                .and()
-            .apply(new SpringSocialConfigurer()
-                    .postLoginUrl("http://159.203.77.168:80")
-                    .alwaysUsePostLoginUrl(true));
+                .and();
+//            .apply(new SpringSocialConfigurer()
+//                    .postLoginUrl("http://organizeme.tk/index.html")
+//                    .alwaysUsePostLoginUrl(true));
     }
 
     @Autowired

@@ -55,6 +55,10 @@ export class LoginComponent {
             ;
     }
 
+    yolo(){
+        window.location.href = this.apiUrl + "/signin/facebook";
+    }
+
     constructor(private http:Http, apiurl:ApiUrl) {
         this.wrongCredentials = false;
         this.wrongInput = false;

@@ -15,7 +15,6 @@ import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.Principal;
 
 @RestController
 public class UsersController {
@@ -23,8 +22,8 @@ public class UsersController {
     @Autowired
     private UserService userService;
 
-//    @Autowired
-//    private ProviderSignInUtils providerSignInUtils;
+    @Autowired
+    private ProviderSignInUtils providerSignInUtils;
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public Short singup(@RequestBody UserDTO userDTO) {
@@ -32,15 +31,14 @@ public class UsersController {
         return result;
     }
 
-//    @RequestMapping(value = "/signup", method = RequestMethod.GET)
-//    public void singup(WebRequest request, HttpServletResponse response) throws IOException {
-//        Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
-//        CustomUser user = new CustomUser(connection.getDisplayName(),connection.createData().getProviderUserId(),"null", UserRole.USER);
-//        userService.addSocialUser(user);
-//        providerSignInUtils.doPostSignUp(user.getLogin(), request);
-//
-//        System.out.println("YOLO!!!");
-//
-//        response.sendRedirect("/index.html");
-//    }
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    public void singup(WebRequest request, HttpServletResponse response) throws IOException {
+        Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
+        CustomUser user = new CustomUser(connection.getDisplayName(),connection.createData().getProviderUserId(),"null", UserRole.USER);
+        userService.addSocialUser(user);
+        providerSignInUtils.doPostSignUp(user.getLogin(), request);
+        System.out.println("YOLO!!!");
+        response.sendRedirect("/index.html");
+    }
+
 }
