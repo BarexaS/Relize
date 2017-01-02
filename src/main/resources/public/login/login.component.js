@@ -53,7 +53,11 @@ var LoginComponent = (function () {
             .modal('show');
     };
     LoginComponent.prototype.yolo = function () {
-        window.location.href = this.apiUrl + "/signin/facebook";
+        var body = '';
+        var headers = new http_1.Headers();
+        var options = new http_1.RequestOptions({ headers: headers });
+        this.http.post(this.apiUrl + "/signin/facebook", body, options)
+            .subscribe();
     };
     LoginComponent = __decorate([
         core_1.Component({

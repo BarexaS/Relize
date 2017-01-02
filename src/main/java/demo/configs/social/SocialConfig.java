@@ -58,8 +58,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
     public ConnectController connectController() {
         ConnectController controller = new ConnectController(
                 connectionFactoryLocator, connectionRepository());
-        controller.setApplicationUrl("http://localhost:8080");
-        System.out.println("YOLO!!!!");
+        controller.setApplicationUrl("http://organizeme.tk");
         return controller;
     }
 
@@ -67,8 +66,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
     public ProviderSignInController providerSignInController(SignInAdapter signInAdapter) {
         ProviderSignInController controller = new ProviderSignInController(connectionFactoryLocator,
                 usersConnectionRepository, signInAdapter);
-        controller.setApplicationUrl("http://localhost:8080");
-        System.out.println("YOLO-YOLO!!!!");
+        controller.setApplicationUrl("http://organizeme.tk");
         return controller;
     }
 

@@ -37,7 +37,6 @@ public class UsersController {
         CustomUser user = new CustomUser(connection.getDisplayName(),connection.createData().getProviderUserId(),"null", UserRole.USER);
         userService.addSocialUser(user);
         providerSignInUtils.doPostSignUp(user.getLogin(), request);
-        System.out.println("YOLO!!!");
         response.sendRedirect("/index.html");
     }
 
