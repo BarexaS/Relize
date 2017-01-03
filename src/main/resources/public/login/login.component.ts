@@ -55,13 +55,8 @@ export class LoginComponent {
             ;
     }
 
-    yolo(){
-        let body = '';
-        let headers = new Headers();
-        let options = new RequestOptions({headers});
-
-        this.http.post(this.apiUrl + "/signin/facebook", body, options)
-            .subscribe();
+    facebookLogIn(){
+        $('<form action="/signin/facebook" method="POST"></form>').submit();
     }
 
     constructor(private http:Http, apiurl:ApiUrl) {

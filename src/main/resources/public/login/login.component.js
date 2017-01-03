@@ -52,12 +52,8 @@ var LoginComponent = (function () {
         $('#singUpModal')
             .modal('show');
     };
-    LoginComponent.prototype.yolo = function () {
-        var body = '';
-        var headers = new http_1.Headers();
-        var options = new http_1.RequestOptions({ headers: headers });
-        this.http.post(this.apiUrl + "/signin/facebook", body, options)
-            .subscribe();
+    LoginComponent.prototype.facebookLogIn = function () {
+        $('<form action="/signin/facebook" method="POST"></form>').submit();
     };
     LoginComponent = __decorate([
         core_1.Component({

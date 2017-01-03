@@ -12,8 +12,7 @@
             <button class="ui button" id="signInBttn" type="submit"
                     (click)="signIn(loginInput.value, passwordInput.value)">Sign In
             </button>
-            <button class="ui button" type="submit" (click)="yolo()">YOLO</button>
-            <a class="ui blue icon button" href="/auth/facebook">FACEBOOK</a>
+            <button class="ui blue button" (click)="facebookLogIn()">Login with Facebook</button>
             <button class="ui button" id="signUpBttn" type="submit" (click)="signUp()">Sign Up</button>
         </div>
     </form>
@@ -30,8 +29,8 @@
 
 <div class="center">
     <div class="ui modal" id="singUpModal">
-    <i class="close icon"></i>
-   <signup-form></signup-form>
+        <i class="close icon"></i>
+        <signup-form></signup-form>
     </div>
 </div>
 

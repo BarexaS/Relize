@@ -48,10 +48,6 @@ public class SocialConfig extends SocialConfigurerAdapter {
                         "1843982582482040",
                         "12770211e4cf7dac1988440a9e1f03bc");
         cfConfig.addConnectionFactory(connectionFactory);
-//        cfConfig.addConnectionFactory(new VKontakteConnectionFactory(
-//                "----",
-//                "----"
-//        ));
     }
 
     @Bean
