@@ -3,7 +3,9 @@
         <div class="header item">
             <h1><i class="coffee icon"></i>{{ title }}</h1>
         </div>
+        <h2 align="center" style="align-content: center; margin-left: 35%; margin-top: 1%; margin-bottom: 1%">Welcome, {{ login }} !</h2>
     </div>
+    
     <a class="ui blue icon button" (click)="showTaskForm()"><i class="add to calendar icon"></i> Add task</a>
     <a class="ui blue icon button" (click)="showTodoForm()"><i class="edit icon"></i> Add note</a>
     <a class="ui blue icon button" href="/logout" method="post"><i class="sign out icon"></i> Logout</a>

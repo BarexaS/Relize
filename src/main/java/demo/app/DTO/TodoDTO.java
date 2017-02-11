@@ -1,4 +1,4 @@
-package demo.app;
+package demo.app.DTO;
 
 public class TodoDTO {
     private String title;

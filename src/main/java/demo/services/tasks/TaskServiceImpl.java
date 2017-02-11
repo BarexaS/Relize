@@ -19,7 +19,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task[] getTasksByUserLoginAndMonth(String login, String month) {
-
         Task[] result = taskRepository.findByLoginAndMonth(login,month).toArray(new Task[0]);
         return result;
     }

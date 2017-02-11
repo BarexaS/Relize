@@ -27,27 +27,27 @@ export class SignUpFormComponent {
         let options = new RequestOptions({headers});
         this.http.post(this.apiUrl+'/signup', body, options)
             .subscribe(data => {
-                this.takeResponse(data.json());
+                this.takeResponse(data.text());
             }, error => {
                 console.log(JSON.stringify(error.json()));
             });
     }
 
-    private takeResponse(data:string) {
+    private takeResponse(data) {
         switch (data) {
-            case 3: {
+            case 'Passwords didn\'t match': {
                 this.passwordMismatch = true;
                 break;
             }
-            case 2: {
+            case 'Password too short': {
                 this.passwordTooShort = true;
                 break;
             }
-            case 1: {
+            case 'Login already exist': {
                 this.loginExist = true;
                 break;
             }
-            case 0: {
+            case 'SUCCESS': {
                 this.loggin();
                 break;
             }

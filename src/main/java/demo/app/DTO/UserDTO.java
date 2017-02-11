@@ -1,10 +1,10 @@
-package demo.app;
+package demo.app.DTO;
 
 public class UserDTO {
-    String login;
-    String password;
-    String repPassword;
-    String secretWord;
+    private String login;
+    private String password;
+    private String repPassword;
+    private String secretWord;
 
     public UserDTO() {
     }

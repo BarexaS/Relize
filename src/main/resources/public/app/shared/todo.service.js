@@ -16,8 +16,10 @@ var apiurl_model_1 = require("../../login/apiurl.model");
 var TodoService = (function () {
     function TodoService(http, apiurl) {
         this.http = http;
+        this.apiurl = apiurl;
         this.onAdded$ = new core_1.EventEmitter();
-        this.apiUrl = apiurl.apiUrl + '/api/todos';
+        this.apiUrl = apiurl_model_1.ApiUrl.getInstance().getUrl() + '/api/todos';
+        this.token = localStorage.getItem('token');
     }
     TodoService.prototype.extractData = function (res) {
         var body = res.json();
@@ -27,7 +29,10 @@ var TodoService = (function () {
         this.onAdded$.emit(todo);
     };
     TodoService.prototype.getTodoData = function () {
-        return this.http.get(this.apiUrl)
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        headers.append('token', this.token);
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.get(this.apiUrl, options)
             .map(function (response) { return response.json(); })
             .catch(function (error) {
             console.error(error);
@@ -37,6 +42,7 @@ var TodoService = (function () {
     TodoService.prototype.addTodo = function (todo) {
         var body = JSON.stringify(todo);
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        headers.append('token', this.token);
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post(this.apiUrl, body, options)
             .map(this.extractData)
@@ -48,6 +54,7 @@ var TodoService = (function () {
     TodoService.prototype.saveTodo = function (todo) {
         var body = JSON.stringify(todo);
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        headers.append('token', this.token);
         var options = new http_1.RequestOptions({ headers: headers });
         var url = this.apiUrl + "/" + todo.id;
         return this.http.put(url, body, options)
@@ -59,6 +66,7 @@ var TodoService = (function () {
     };
     TodoService.prototype.deleteTodo = function (todo) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        headers.append('token', this.token);
         var options = new http_1.RequestOptions({ headers: headers });
         var url = this.apiUrl + "/" + todo.id;
         return this.http.delete(url, options)

@@ -12,10 +12,12 @@ export class TodoService {
     @Output() onAdded$ : EventEmitter<ITodo>;
 
     private apiUrl:string;
+    private token:string;
 
-    constructor(private http:Http, apiurl:ApiUrl) {
+    constructor(private http:Http,public  apiurl:ApiUrl) {
         this.onAdded$ = new EventEmitter<ITodo>();
-        this.apiUrl = apiurl.apiUrl + '/api/todos';
+        this.apiUrl = ApiUrl.getInstance().getUrl() + '/api/todos';
+        this.token = localStorage.getItem('token')
     }
 
     private extractData(res: Response) {
@@ -28,7 +30,10 @@ export class TodoService {
     }
 
     getTodoData():Observable<any> {
-        return this.http.get(this.apiUrl)
+        let headers = new Headers({'Content-Type': 'application/json'});
+        headers.append('token',this.token);
+        let options = new RequestOptions({headers});
+        return this.http.get(this.apiUrl,options)
             .map(response => response.json())
             .catch(error => {
                 console.error(error);
@@ -39,6 +44,7 @@ export class TodoService {
     addTodo(todo:ITodo):Observable<ITodo> {
         let body = JSON.stringify(todo);
         let headers = new Headers({'Content-Type': 'application/json'});
+        headers.append('token',this.token);
         let options = new RequestOptions({headers});
 
         return this.http.post(this.apiUrl, body, options)
@@ -52,6 +58,7 @@ export class TodoService {
     saveTodo(todo:ITodo):Observable<ITodo> {
         let body = JSON.stringify(todo);
         let headers = new Headers({'Content-Type': 'application/json'});
+        headers.append('token',this.token);
         let options = new RequestOptions({headers});
 
         let url = `${this.apiUrl}/${todo.id}`;
@@ -66,6 +73,7 @@ export class TodoService {
 
     deleteTodo(todo:ITodo):Observable<ITodo> {
         let headers = new Headers({'Content-Type': 'application/json'});
+        headers.append('token',this.token);
         let options = new RequestOptions({headers});
 
         let url = `${this.apiUrl}/${todo.id}`;

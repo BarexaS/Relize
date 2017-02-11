@@ -1,8 +1,8 @@
 package demo.controllers;
 
 import demo.app.CustomUser;
+import demo.app.DTO.TodoDTO;
 import demo.app.Todo;
-import demo.app.TodoDTO;
 import demo.services.todos.TodosService;
 import demo.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

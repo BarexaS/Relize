@@ -10,20 +10,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var task_model_1 = require("../../../shared/task.model");
+var task_service_1 = require("../../../shared/task.service");
 var TaskFormComponent = (function () {
-    function TaskFormComponent() {
+    function TaskFormComponent(taskService) {
+        this.taskService = taskService;
         this.created = new core_1.EventEmitter();
     }
-    TaskFormComponent.prototype.ngOnInit = function () { };
-    TaskFormComponent.prototype.creat = function (title, text, date) {
+    TaskFormComponent.prototype.creat = function (title, text, date, files) {
+        var file = [];
+        for (var i = 0; i < files.length; i++) {
+            file.push(files[i]);
+        }
         if (title && date) {
-            var task = new task_model_1.Task(title, date, text);
+            var task = new task_model_1.Task(title, date, text, file);
+            this.taskService.filesToUpload = this.filesToUpload;
             this.created.emit(task);
             this.message = 'Task created!';
         }
         if (!date) {
             this.message = 'Date is required!';
         }
+        if (!title) {
+            this.message = 'Title is required!';
+        }
+    };
+    TaskFormComponent.prototype.fileAdded = function (fileInput) {
+        this.filesToUpload = fileInput.target.files;
     };
     __decorate([
         core_1.Output(), 
@@ -35,7 +47,7 @@ var TaskFormComponent = (function () {
             templateUrl: './app/components/tasks/task-form/task-form.component.html',
             styleUrls: ['./app/components/tasks/task-form/task-form.component.css']
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [task_service_1.TaskService])
     ], TaskFormComponent);
     return TaskFormComponent;
 }());

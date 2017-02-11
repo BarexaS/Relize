@@ -1,4 +1,8 @@
-package demo.app;
+package demo.app.DTO;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Arrays;
 
 public class TaskDTO {
 
@@ -7,13 +11,15 @@ public class TaskDTO {
     private String date;
     private String text;
     private boolean done;
+    private MultipartFile[] files;
 
-    public TaskDTO(String title,String date, String text, boolean done, long id) {
+    public TaskDTO(String title,String date, String text, boolean done, long id, MultipartFile[] files) {
         this.title = title;
         this.date = date;
         this.text = text;
         this.done = done;
         this.id = id;
+        this.files = files;
     }
 
     public long getId() {
@@ -57,5 +63,25 @@ public class TaskDTO {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public MultipartFile[] getFiles() {
+        return files;
+    }
+
+    public void setFiles(MultipartFile[] files) {
+        this.files = files;
+    }
+
+    @Override
+    public String toString() {
+        return "TaskDTO{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", date='" + date + '\'' +
+                ", text='" + text + '\'' +
+                ", done=" + done +
+                ", files=" + Arrays.toString(files) +
+                '}';
     }
 }

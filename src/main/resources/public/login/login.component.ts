@@ -12,7 +12,7 @@ export class LoginComponent {
     wrongInput:boolean;
     wrongCredentials:boolean;
 
-    private apiUrl:string;
+    private url:string;
 
     public signIn(login:string, pass:string) {
         this.wrongInput = false;
@@ -26,9 +26,10 @@ export class LoginComponent {
         let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
         let options = new RequestOptions({headers});
 
-        this.http.post(this.apiUrl + "/loginOn", body, options)
+        this.http.post(this.url + "/loginOn", body, options)
             .subscribe(data => {
-                window.location.href = this.apiUrl + "/index.html";
+                this.getToken(login,pass);
+                // window.location.href = this.apiUrl + "/index.html";
             }, error => {
                 if ((JSON.stringify(error.json().status)) == "203") {
                     this.wrongCredent();
@@ -59,9 +60,28 @@ export class LoginComponent {
         $('<form action="/signin/facebook" method="POST"></form>').submit();
     }
 
-    constructor(private http:Http, apiurl:ApiUrl) {
+    getToken(login:string, pass:string){
+        console.log('Works!');
+        let body = 'login=' + login + '&password=' + pass;
+        let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
+        let options = new RequestOptions({headers});
+
+        this.http.post(this.url + "/get-token", body, options)
+            .subscribe(data => {
+                console.log(data.text());
+                this.setToken(data.text());
+                window.location.href = this.url + "/index.html";
+            }, error => {});
+    }
+
+    private setToken(token:string){
+        localStorage.setItem('token',token)
+        console.log('Set Token - '+localStorage.getItem('token'));
+    }
+
+    constructor(private http:Http) {
         this.wrongCredentials = false;
         this.wrongInput = false;
-        this.apiUrl = apiurl.apiUrl;
+        this.url = ApiUrl.getInstance().getUrl();
     }
 }

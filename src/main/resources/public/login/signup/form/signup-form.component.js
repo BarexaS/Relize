@@ -32,26 +32,26 @@ var SignUpFormComponent = (function () {
         var options = new http_1.RequestOptions({ headers: headers });
         this.http.post(this.apiUrl + '/signup', body, options)
             .subscribe(function (data) {
-            _this.takeResponse(data.json());
+            _this.takeResponse(data.text());
         }, function (error) {
             console.log(JSON.stringify(error.json()));
         });
     };
     SignUpFormComponent.prototype.takeResponse = function (data) {
         switch (data) {
-            case 3: {
+            case 'Passwords didn\'t match': {
                 this.passwordMismatch = true;
                 break;
             }
-            case 2: {
+            case 'Password too short': {
                 this.passwordTooShort = true;
                 break;
             }
-            case 1: {
+            case 'Login already exist': {
                 this.loginExist = true;
                 break;
             }
-            case 0: {
+            case 'SUCCESS': {
                 this.loggin();
                 break;
             }

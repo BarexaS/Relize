@@ -14,10 +14,12 @@ var Rx_1 = require("rxjs/Rx");
 require("rxjs/Rx");
 var apiurl_model_1 = require("../../login/apiurl.model");
 var TaskService = (function () {
-    function TaskService(http, apiurl) {
+    function TaskService(http) {
         this.http = http;
         this.onAdded$ = new core_1.EventEmitter();
-        this.apiUrl = apiurl.apiUrl + '/api/tasks';
+        this.apiUrl = apiurl_model_1.ApiUrl.getInstance().getUrl();
+        this.apiUrl = this.apiUrl + '/api/tasks';
+        this.token = localStorage.getItem('token');
     }
     TaskService.prototype.extractData = function (res) {
         var body = res.json();
@@ -26,20 +28,76 @@ var TaskService = (function () {
     TaskService.prototype.taskCreated = function (task) {
         this.onAdded$.emit(task);
     };
+    //
+    // addTask(task:ITask):Observable<ITask> {
+    //     console.log(task);
+    //     let body = JSON.stringify(task);
+    //     let headers = new Headers({'Content-Type': 'application/json'});
+    //     headers.append('token',this.token);
+    //     let options = new RequestOptions({headers});
+    //
+    //     return this.http.post(this.apiUrl, body, options)
+    //         .map(this.extractData)
+    //         .catch(error => {
+    //             console.error(error);
+    //             return Observable.throw(error.json())
+    //         })
+    // }
     TaskService.prototype.addTask = function (task) {
-        var body = JSON.stringify(task);
-        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
-        var options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post(this.apiUrl, body, options)
-            .map(this.extractData)
-            .catch(function (error) {
-            console.error(error);
-            return Rx_1.Observable.throw(error.json());
+        return this.makeFileRequest(task);
+        // let formData = new FormData();
+        // formData.append("files", new Blob([this._filesToUpload[0]]));
+        // task.file = [];
+        // console.log(this._filesToUpload);
+        // formData.append("task", new Blob([JSON.stringify(task)],{
+        //     type: "application/json"
+        // }));
+        // console.log(task);
+        // console.log(formData);
+        // let headers = new Headers({
+        //     'token': this.token,
+        //     // 'Content-Type': undefined
+        // });
+        // return this.http.post(this.apiUrl, formData, {headers})
+        //     .map(this.extractData)
+        //     .catch(error => {
+        //         console.error(error);
+        //         return Observable.throw(error.json())
+        //     })
+    };
+    TaskService.prototype.makeFileRequest = function (task) {
+        var _this = this;
+        return Rx_1.Observable.create(function (observer) {
+            var formData = new FormData();
+            var xhr = new XMLHttpRequest();
+            console.log(_this._filesToUpload);
+            for (var i = 0; i < _this._filesToUpload.length; i++) {
+                formData.append("files", _this._filesToUpload[i], _this._filesToUpload[i].name);
+            }
+            // formData.append("task", new Blob([JSON.stringify(task)],{
+            //         type: "application/json"
+            //     }));
+            formData.append("text", "RABOTAI!");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    }
+                    else {
+                        observer.error(xhr.response);
+                    }
+                }
+            };
+            xhr.open("POST", _this.apiUrl, true);
+            xhr.setRequestHeader("token", _this.token);
+            xhr.send(formData);
         });
     };
     TaskService.prototype.saveTask = function (task) {
         var body = JSON.stringify(task);
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        headers.append('token', this.token);
         var options = new http_1.RequestOptions({ headers: headers });
         var url = this.apiUrl + "/" + task.id;
         return this.http.put(url, body, options)
@@ -50,7 +108,10 @@ var TaskService = (function () {
         });
     };
     TaskService.prototype.getTaskData = function (date) {
-        return this.http.get(this.apiUrl + '/' + date)
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        headers.append('token', this.token);
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.get(this.apiUrl + '/' + date, options)
             .map(function (response) { return response.json(); })
             .catch(function (error) {
             console.error(error);
@@ -59,6 +120,7 @@ var TaskService = (function () {
     };
     TaskService.prototype.deleteTask = function (task) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        headers.append('token', this.token);
         var options = new http_1.RequestOptions({ headers: headers });
         var url = this.apiUrl + "/" + task.id;
         return this.http.delete(url, options)
@@ -68,13 +130,20 @@ var TaskService = (function () {
             return Rx_1.Observable.throw(error.json());
         });
     };
+    Object.defineProperty(TaskService.prototype, "filesToUpload", {
+        set: function (value) {
+            this._filesToUpload = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
     ], TaskService.prototype, "onAdded$", void 0);
     TaskService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http, apiurl_model_1.ApiUrl])
+        __metadata('design:paramtypes', [http_1.Http])
     ], TaskService);
     return TaskService;
 }());
