@@ -44,56 +44,64 @@ var TaskService = (function () {
     //         })
     // }
     TaskService.prototype.addTask = function (task) {
-        return this.makeFileRequest(task);
-        // let formData = new FormData();
-        // formData.append("files", new Blob([this._filesToUpload[0]]));
-        // task.file = [];
-        // console.log(this._filesToUpload);
+        // return this.makeFileRequest(task);
+        var formData = new FormData();
+        formData.append("file", this.filesToUpload, this.filesToUpload.name);
+        formData.append("text", "RABOTAI!");
+        task.file = [];
         // formData.append("task", new Blob([JSON.stringify(task)],{
         //     type: "application/json"
         // }));
         // console.log(task);
         // console.log(formData);
-        // let headers = new Headers({
-        //     'token': this.token,
-        //     // 'Content-Type': undefined
-        // });
-        // return this.http.post(this.apiUrl, formData, {headers})
-        //     .map(this.extractData)
-        //     .catch(error => {
-        //         console.error(error);
-        //         return Observable.throw(error.json())
-        //     })
-    };
-    TaskService.prototype.makeFileRequest = function (task) {
-        var _this = this;
-        return Rx_1.Observable.create(function (observer) {
-            var formData = new FormData();
-            var xhr = new XMLHttpRequest();
-            console.log(_this._filesToUpload);
-            for (var i = 0; i < _this._filesToUpload.length; i++) {
-                formData.append("files", _this._filesToUpload[i], _this._filesToUpload[i].name);
-            }
-            // formData.append("task", new Blob([JSON.stringify(task)],{
-            //         type: "application/json"
-            //     }));
-            formData.append("text", "RABOTAI!");
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        observer.next(JSON.parse(xhr.response));
-                        observer.complete();
-                    }
-                    else {
-                        observer.error(xhr.response);
-                    }
-                }
-            };
-            xhr.open("POST", _this.apiUrl, true);
-            xhr.setRequestHeader("token", _this.token);
-            xhr.send(formData);
+        var headers = new http_1.Headers({
+            'token': this.token,
+            'Content-Type': undefined
+        });
+        return this.http.post(this.apiUrl, formData, { headers: headers })
+            .map(this.extractData)
+            .catch(function (error) {
+            console.error(error);
+            return Rx_1.Observable.throw(error.json());
         });
     };
+    // makeFileRequest(task:ITask) {
+    //     return Observable.create(observer =>  {
+    //         var formData: any = new FormData();
+    //         var xhr = new XMLHttpRequest();
+    //         console.log(this.filesToUpload);
+    //         // var reader = new FileReader();
+    //         // for(var i = 0; i < this.filesToUpload.length; i++) {
+    //         //     console.log(i);
+    //         //     console.log(this.filesToUpload[i]);
+    //         //     // reader.readAsBinaryString(this.filesToUpload[i]);
+    //         //     // console.log(reader.result);
+    //         //     formData.append("files", this.filesToUpload[i], this.filesToUpload[i].name);
+    //         // }
+    //         // formData.append("task", new Blob([JSON.stringify(task)],{
+    //         //         type: "application/json"
+    //         //     }));
+    //
+    //         formData.append("file",this.filesToUpload,this.filesToUpload.name);
+    //         formData.append("text","RABOTAI!");
+    //         console.log(formData.getAll('file'));
+    //         xhr.onreadystatechange = function () {
+    //             if (xhr.readyState == 4) {
+    //                 if (xhr.status == 200) {
+    //                     observer.next(JSON.parse(xhr.response));
+    //                     observer.complete();
+    //                 } else {
+    //                     observer.error(xhr.response);
+    //                 }
+    //             }
+    //         }
+    //         xhr.open("POST",this.apiUrl, true);
+    //         xhr.setRequestHeader("token",this.token);
+    //
+    //         xhr.setRequestHeader('Content-Type', null);
+    //         xhr.send(formData);
+    //     });
+    // }
     TaskService.prototype.saveTask = function (task) {
         var body = JSON.stringify(task);
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
@@ -130,13 +138,6 @@ var TaskService = (function () {
             return Rx_1.Observable.throw(error.json());
         });
     };
-    Object.defineProperty(TaskService.prototype, "filesToUpload", {
-        set: function (value) {
-            this._filesToUpload = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
     __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)

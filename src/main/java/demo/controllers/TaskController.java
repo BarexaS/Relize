@@ -6,8 +6,8 @@ import demo.services.tasks.TaskService;
 import demo.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 @RestController
@@ -21,24 +21,23 @@ public class TaskController {
 
 
     @RequestMapping(value = "/api/tasks", method = RequestMethod.POST, consumes = {"multipart/form-data"})
-    public TaskDTO addTask(Principal principal, @RequestPart("files") MultipartFile file, @RequestPart("text") String text) {
-        System.out.println("lol");
-        System.out.println(text);
-        System.out.println(file.getOriginalFilename());
+    public TaskDTO addTask(Principal principal, @RequestParam("text") String text, HttpServletRequest request) {
+        request.getParameterMap().keySet().forEach(f -> System.out.println(f));
+//        System.out.println(file);
+//        for (String text : file){
+            System.out.println(text);
+//        }
+//        System.out.println(file.length);
 //        for (MultipartFile file : files) {
 //            if (file.isEmpty()) {
-//                System.out.println("pusto");
+//                System.out.println("empty");
 //            } else {
 //                System.out.println(file.getOriginalFilename());
 //            }
 //        }
-//        System.out.println(taskDTO);
-//        System.out.println(files.length);
-//        System.out.println(files.getOriginalFilename());
 //        CustomUser owner = userService.getUserByLogin(principal.getName());
 //        String month = taskDTO.getDate().substring(0,taskDTO.getDate().lastIndexOf('-'));
 //        Task task = new Task(taskDTO.getTitle(),taskDTO.getDate(), taskDTO.getText(),false,owner, month,taskDTO.getFiles());
-//        System.out.println(task);
 //        Task temp = taskService.addTask(task);
 //        taskDTO.setId(temp.getId());
 //        return taskDTO;
