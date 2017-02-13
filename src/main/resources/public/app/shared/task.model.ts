@@ -5,7 +5,6 @@ export interface ITask extends ITodo{
     date : string;
     text : string;
     done : boolean;
-    file : File[];
 }
 
 
@@ -15,14 +14,12 @@ export class Task implements ITask{
     date:string;
     text : string;
     done:boolean;
-    file:File[];
 
-    constructor(title:string,date:string, text :string, file:File[]){
+    constructor(title:string,date:string, text :string){
         this.title = title;
         this.done = false;
         this.text = text;
         this.date = date;
         this.id = 0;
-        this.file = file;
     }
 }

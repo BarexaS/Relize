@@ -11,19 +11,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var task_model_1 = require("../../../shared/task.model");
 var task_service_1 = require("../../../shared/task.service");
+var http_1 = require("@angular/http");
+var apiurl_model_1 = require("../../../../login/apiurl.model");
 var TaskFormComponent = (function () {
-    function TaskFormComponent(taskService) {
+    function TaskFormComponent(taskService, http, apiurl) {
+        this.http = http;
+        this.apiurl = apiurl;
         this.taskService = taskService;
         this.created = new core_1.EventEmitter();
     }
-    TaskFormComponent.prototype.creat = function (title, text, date, files) {
-        var file = [];
-        for (var i = 0; i < files.length; i++) {
-            file.push(files[i]);
-        }
+    TaskFormComponent.prototype.extractData = function (res) {
+        var body = res.json();
+        return body || {};
+    };
+    TaskFormComponent.prototype.creat = function (title, text, date) {
         if (title && date) {
-            var task = new task_model_1.Task(title, date, text, file);
-            // this.taskService.filesToUpload = ;
+            var task = new task_model_1.Task(title, date, text);
             this.created.emit(task);
             this.message = 'Task created!';
         }
@@ -35,21 +38,6 @@ var TaskFormComponent = (function () {
         }
     };
     TaskFormComponent.prototype.fileAdded = function (fileInput) {
-        // this.filesToUpload = <Array<File>> fileInput.target.files;
-        // var reader = new FileReader();
-        // var resultSet = [];
-        // var self = this;
-        // reader.onloadend = function () {
-        //     console.log("DONE!");
-        //     self.taskService.filesToUpload.push(reader.result);
-        // }
-        //
-        // for(var i = 0; i < this.filesToUpload.length; i++) {
-        //     console.log(i);
-        //     reader.readAsBinaryString(this.filesToUpload[i]);
-        //     // this.taskService.filesToUpload.push(this.filesToUpload[i]);
-        // }
-        console.log(fileInput.target.files[0]);
         this.taskService.filesToUpload = fileInput.target.files[0];
     };
     __decorate([
@@ -62,7 +50,7 @@ var TaskFormComponent = (function () {
             templateUrl: './app/components/tasks/task-form/task-form.component.html',
             styleUrls: ['./app/components/tasks/task-form/task-form.component.css']
         }), 
-        __metadata('design:paramtypes', [task_service_1.TaskService])
+        __metadata('design:paramtypes', [task_service_1.TaskService, http_1.Http, apiurl_model_1.ApiUrl])
     ], TaskFormComponent);
     return TaskFormComponent;
 }());

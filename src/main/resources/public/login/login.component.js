@@ -58,20 +58,17 @@ var LoginComponent = (function () {
     };
     LoginComponent.prototype.getToken = function (login, pass) {
         var _this = this;
-        console.log('Works!');
         var body = 'login=' + login + '&password=' + pass;
         var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         var options = new http_1.RequestOptions({ headers: headers });
         this.http.post(this.url + "/get-token", body, options)
             .subscribe(function (data) {
-            console.log(data.text());
             _this.setToken(data.text());
             window.location.href = _this.url + "/index.html";
         }, function (error) { });
     };
     LoginComponent.prototype.setToken = function (token) {
         localStorage.setItem('token', token);
-        console.log('Set Token - ' + localStorage.getItem('token'));
     };
     LoginComponent = __decorate([
         core_1.Component({

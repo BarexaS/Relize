@@ -1,9 +1,6 @@
 package demo.app;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.*;
-import java.util.Arrays;
 
 @Entity
 public class Task {
@@ -15,13 +12,12 @@ public class Task {
     private String text;
     private boolean done;
     private String monthForSearch;
-    private MultipartFile[] files;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private CustomUser owner;
 
-    public Task(String title,String date, String text, boolean done, CustomUser owner, String monthForSearch, MultipartFile[] files) {
+    public Task(String title,String date, String text, boolean done, CustomUser owner, String monthForSearch) {
         this.title = title;
         this.date = date;
         this.text = text;
@@ -29,7 +25,6 @@ public class Task {
         this.owner = owner;
         owner.addTask(this);
         this.monthForSearch = monthForSearch;
-        this.files = files;
     }
 
     public String getMonthForSearch() {
@@ -87,14 +82,6 @@ public class Task {
         this.owner = owner;
     }
 
-    public MultipartFile[] getFiles() {
-        return files;
-    }
-
-    public void setFiles(MultipartFile[] files) {
-        this.files = files;
-    }
-
     @Override
     public String toString() {
         return "Task{" +
@@ -104,7 +91,6 @@ public class Task {
                 ", text='" + text + '\'' +
                 ", done=" + done +
                 ", monthForSearch='" + monthForSearch + '\'' +
-                ", files=" + Arrays.toString(files) +
                 ", owner=" + owner +
                 '}';
     }

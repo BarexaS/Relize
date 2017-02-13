@@ -61,14 +61,12 @@ export class LoginComponent {
     }
 
     getToken(login:string, pass:string){
-        console.log('Works!');
         let body = 'login=' + login + '&password=' + pass;
         let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
         let options = new RequestOptions({headers});
 
         this.http.post(this.url + "/get-token", body, options)
             .subscribe(data => {
-                console.log(data.text());
                 this.setToken(data.text());
                 window.location.href = this.url + "/index.html";
             }, error => {});
@@ -76,7 +74,6 @@ export class LoginComponent {
 
     private setToken(token:string){
         localStorage.setItem('token',token)
-        console.log('Set Token - '+localStorage.getItem('token'));
     }
 
     constructor(private http:Http) {

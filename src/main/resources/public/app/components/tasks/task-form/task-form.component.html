@@ -1,13 +1,16 @@
 <div class="ui segment form">
-    <div class="ui fluid action input">
-        <input type="text" name="title" placeholder="Заголовом заметки"
-               (keyup.enter)="creat(titleInput.value,textInput.value,dateInput.value,fileInput.files); titleInput.value = ''; textInput.value = ''; dateInput.value =''"
-               #titleInput id="titleInput">
-        <input type="date" required="required" #dateInput id="date">
-        <button type="button" class="ui primary button" (click)="creat(titleInput.value,textInput.value,dateInput.value,fileInput.files); titleInput.value = '';
-        textInput.value = ''; dateInput.value=''">Добавить</button>
-    </div>
-    <div style="text-align:center;">{{ message }}</div>
-    <textarea id="textarea" name="comment" cols="40" rows="2" placeholder="Текст заметки" #textInput></textarea>
-    <input type="file" #fileInput (change)="fileAdded($event)"  name="files"/>
+    <form #taskForm action="/api/tasks" method="POST" enctype="multipart/form-data">
+        <div class="ui fluid action input">
+            <input type="text" name="title" placeholder="Заголовом заметки"
+                   (keyup.enter)="creat(titleInput.value,textInput.value,dateInput.value, fileInput); titleInput.value = ''; textInput.value = ''; dateInput.value =''; fileInput.value = ''"
+                   #titleInput id="titleInput">
+            <input type="date" name="data" required="required" #dateInput id="date">
+            <button type="button" class="ui primary button" (click)="creat(titleInput.value,textInput.value,dateInput.value,fileInput); titleInput.value = '';
+        textInput.value = ''; dateInput.value=''; fileInput.value = '';">Добавить
+            </button>
+        </div>
+        <div style="text-align:center;">{{ message }}</div>
+        <textarea id="textarea" name="comment" cols="40" rows="2" placeholder="Текст заметки" #textInput></textarea>
+        <input type="file" #fileInput (change)="fileAdded($event)" name="files"/>
+    </form>
 </div>

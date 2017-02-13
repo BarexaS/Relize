@@ -1,12 +1,11 @@
 "use strict";
 var Task = (function () {
-    function Task(title, date, text, file) {
+    function Task(title, date, text) {
         this.title = title;
         this.done = false;
         this.text = text;
         this.date = date;
         this.id = 0;
-        this.file = file;
     }
     return Task;
 }());

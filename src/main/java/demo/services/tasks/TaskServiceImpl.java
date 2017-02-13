@@ -36,12 +36,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Transactional
     public Task getTaskById(long id) {
         return taskRepository.findOne(id);
     }
 
     @Override
+    @Transactional
     public Task saveTask(Task task) {
         return taskRepository.save(task);
     }

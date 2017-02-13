@@ -15,7 +15,7 @@ export class TasksComponent implements OnInit {
     weeks = [[], [], [], [], []];
     month:number;
     year:number;
-    date: Date;
+    date:Date;
 
     constructor(taskService:TaskService) {
         this.taskService = taskService;
@@ -26,25 +26,28 @@ export class TasksComponent implements OnInit {
         );
     }
 
-    taskToggled(task:ITask):void{
-        this.taskService.saveTask(task).subscribe(data => {});
+    taskToggled(task:ITask):void {
+        this.taskService.saveTask(task).subscribe(data => {
+        });
     }
-    taskDeleted(task:ITask):void{
-        this.taskService.deleteTask(task).subscribe(data => {});
+
+    taskDeleted(task:ITask):void {
+        this.taskService.deleteTask(task).subscribe(data => {
+        });
         this.deleteTask(task);
     }
 
-    deleteTask(task:ITask){
+    deleteTask(task:ITask) {
         let index = this.tasks.indexOf(task);
         if (index > -1) {
             this.tasks.splice(index, 1);
         }
     }
 
-    tasksForDay(day){
-        let tasksForDay : ITask[] = [];
-        for (let i=0; i< this.tasks.length; i++){
-            if (this.tasks[i].date.split('-')[2] == day){
+    tasksForDay(day) {
+        let tasksForDay:ITask[] = [];
+        for (let i = 0; i < this.tasks.length; i++) {
+            if (this.tasks[i].date.split('-')[2] == day) {
                 tasksForDay.push(this.tasks[i]);
             }
         }
@@ -55,7 +58,8 @@ export class TasksComponent implements OnInit {
         let date = new Date();
         this.calendarInit(date);
     }
-    private calendarInit(date : Date){
+
+    private calendarInit(date:Date) {
         this.month = date.getMonth() + 1;
         this.year = date.getFullYear();
         this.date = new Date(this.year, this.month, 0);
@@ -65,9 +69,15 @@ export class TasksComponent implements OnInit {
     }
 
     private loadMonth():void {
-        this.taskService.getTaskData(this.year + '-' + this.month).subscribe(
-            data => this.tasks = data
-        )
+        if ((this.month / 10) < 1) {
+            this.taskService.getTaskData(this.year + '-0' + this.month).subscribe(
+                data => this.tasks = data
+            )
+        } else {
+            this.taskService.getTaskData(this.year + '-' + this.month).subscribe(
+                data => this.tasks = data
+            )
+        }
     }
 
     private constructMonth() {
@@ -85,13 +95,15 @@ export class TasksComponent implements OnInit {
     private addTask(task:ITask):void {
         this.tasks.push(task);
     }
-    private nextMonth(){
-        this.month = this.month+1;
+
+    private nextMonth() {
+        this.month = this.month + 1;
         this.date = new Date(this.year, this.month, 0);
         this.calendarInit(this.date);
     }
-    private previousMonth(){
-        this.month = this.month-1;
+
+    private previousMonth() {
+        this.month = this.month - 1;
         this.date = new Date(this.year, this.month, 0);
         this.calendarInit(this.date);
     }
