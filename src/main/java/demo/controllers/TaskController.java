@@ -3,13 +3,13 @@ package demo.controllers;
 import demo.app.CustomUser;
 import demo.app.DTO.TaskDTO;
 import demo.app.Task;
+import demo.services.files.FileService;
 import demo.services.tasks.TaskService;
 import demo.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.security.Principal;
 
 @RestController
@@ -21,16 +21,19 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
+    @Autowired
+    private FileService fileService;
+
 
     @RequestMapping(value = "/api/tasks", method = RequestMethod.POST)
-    public TaskDTO addTask(Principal principal, @RequestParam(value = "file", required = false) MultipartFile file, @RequestPart("task") @Valid TaskDTO taskDTO) {
+    public TaskDTO addTask(Principal principal, @RequestParam(value = "file", required = false) MultipartFile file, @RequestPart("task") TaskDTO taskDTO) {
         System.out.println(taskDTO);
+        CustomUser owner = userService.getUserByLogin(principal.getName());
         if (file != null) {
-            System.out.println(file.getOriginalFilename());
+            fileService.uploadFile(owner.getId(), file);
         } else {
             System.out.println("there is no file!");
         }
-        CustomUser owner = userService.getUserByLogin(principal.getName());
         String month = taskDTO.getDate().substring(0,taskDTO.getDate().lastIndexOf('-'));
         Task task = new Task(taskDTO.getTitle(),taskDTO.getDate(), taskDTO.getText(),false,owner, month);
         Task temp = taskService.addTask(task);
