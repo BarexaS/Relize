@@ -1,7 +1,7 @@
 {
-  "name": "angular2do",
+  "name": "organizeme",
   "version": "0.1.0",
-  "description": "Angular 2Do",
+  "description": "OrganizeMe",
   "engines": {
     "node": "6.7.0"
   },

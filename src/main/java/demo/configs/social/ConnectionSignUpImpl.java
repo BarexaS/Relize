@@ -1,7 +1,7 @@
 package demo.configs.social;
 
-import demo.app.CustomUser;
-import demo.app.UserRole;
+import demo.app.entities.CustomUser;
+import demo.app.enums.UserRole;
 import demo.services.user.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter} from "@angular/core";
-import {Todo} from "../../../shared/todo.model";
+import {ITodo} from "../../../shared/todo/todo.model";
 
 @Component({
     selector: "todo-item",
@@ -8,15 +8,15 @@ import {Todo} from "../../../shared/todo.model";
 })
 
 export class TodoItem {
-    @Input() todo: Todo;
+    @Input() todo: ITodo;
     @Output() deleted = new EventEmitter();
     @Output() toggled = new EventEmitter();
 
     showText : boolean;
 
     constructor() {
-        this.toggled = new EventEmitter<Todo>();
-        this.deleted = new EventEmitter<Todo>();
+        this.toggled = new EventEmitter<ITodo>();
+        this.deleted = new EventEmitter<ITodo>();
         this.showText = false;
     }
 

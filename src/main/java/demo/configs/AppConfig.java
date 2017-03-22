@@ -51,4 +51,11 @@ public class AppConfig {
         adapter.setDatabasePlatform(sqlDialect);
         return adapter;
     }
+
+//    @Bean
+//    public CommonsMultipartResolver multipartResolver() {
+//        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+//        resolver.setMaxUploadSize(10_000_000);
+//        return resolver;
+//    }
 }

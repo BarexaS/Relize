@@ -1,8 +1,10 @@
 import {Component} from "@angular/core";
-import {TodoService} from "./shared/todo.service";
-import {ITask} from "./shared/task.model";
-import {TaskService} from "./shared/task.service";
-import {ITodo} from "./shared/todo.model";
+import {TodoService} from "./shared/todo/todo.service";
+import {ITask} from "./shared/task/task.model";
+import {TaskService} from "./shared/task/task.service";
+import {ITodo} from "./shared/todo/todo.model";
+import {Headers, RequestOptions, Http} from "@angular/http";
+import {ApiUrl} from "../login/apiurl.model";
 declare var $: any;
 
 @Component({
@@ -12,14 +14,19 @@ declare var $: any;
 })
 export class AppComponent {
     title: string;
+    login:string;
     taskService: TaskService;
     todoService : TodoService;
+    url:string;
 
-    constructor(taskService : TaskService,todoService : TodoService) {
+    constructor(taskService : TaskService,todoService : TodoService, private http:Http) {
         this.todoService = todoService;
         this.taskService = taskService;
         this.title = 'OrganizeMe!';
+        this.url = ApiUrl.getInstance().getUrl();
+        this.getLogin();
     }
+
 
     onTaskCreated(task: ITask): void {
         this.taskService.taskCreated(task);
@@ -35,6 +42,12 @@ export class AppComponent {
         ;
     }
 
+    showGroupsForm(){
+        $('#groupModal')
+            .modal('show')
+        ;
+    }
+
     showTodoForm(){
         $('#todoModal')
             .modal('show')
@@ -44,5 +57,15 @@ export class AppComponent {
         $('#taskModal')
             .modal('show')
         ;
+    }
+
+    getLogin(){
+        let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
+        let options = new RequestOptions({headers});
+
+        this.http.get(this.url + "/get-login", options)
+            .subscribe(data => {
+                this.login =  data.text();
+            }, error => {});
     }
 }

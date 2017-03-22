@@ -11,9 +11,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var ApiUrl = (function () {
     function ApiUrl() {
-        // public apiUrl = 'http://localhost:8080';
-        this.apiUrl = 'http://organizeme.tk';
+        this.apiUrl = 'http://localhost:8080';
+        // if (!ApiUrl.isCreating) {
+        //     throw new Error("You can't call new in instances! Call getInstance() instead.");
+        // }
     }
+    ApiUrl.getInstance = function () {
+        if (ApiUrl.instance == null) {
+            ApiUrl.isCreating = true;
+            ApiUrl.instance = new ApiUrl();
+            ApiUrl.isCreating = false;
+        }
+        return ApiUrl.instance;
+    };
+    ApiUrl.prototype.setToken = function (tok) {
+        ApiUrl.token = tok;
+    };
+    ApiUrl.prototype.getToken = function () {
+        return ApiUrl.token;
+    };
+    ApiUrl.prototype.setUrl = function (url) {
+        this.apiUrl = url;
+    };
+    ApiUrl.prototype.getUrl = function () {
+        return this.apiUrl;
+    };
+    // apiUrl = 'http://organizeme.tk';
+    ApiUrl.token = '';
+    ApiUrl.isCreating = false;
     ApiUrl = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])

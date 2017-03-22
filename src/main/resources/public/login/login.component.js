@@ -12,11 +12,11 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var apiurl_model_1 = require("./apiurl.model");
 var LoginComponent = (function () {
-    function LoginComponent(http, apiurl) {
+    function LoginComponent(http) {
         this.http = http;
         this.wrongCredentials = false;
         this.wrongInput = false;
-        this.apiUrl = apiurl.apiUrl;
+        this.url = apiurl_model_1.ApiUrl.getInstance().getUrl();
     }
     LoginComponent.prototype.signIn = function (login, pass) {
         var _this = this;
@@ -29,9 +29,10 @@ var LoginComponent = (function () {
         var body = 'username=' + login + '&password=' + pass;
         var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         var options = new http_1.RequestOptions({ headers: headers });
-        this.http.post(this.apiUrl + "/loginOn", body, options)
+        this.http.post(this.url + "/loginOn", body, options)
             .subscribe(function (data) {
-            window.location.href = _this.apiUrl + "/index.html";
+            _this.getToken(login, pass);
+            // window.location.href = this.apiUrl + "/index.html";
         }, function (error) {
             if ((JSON.stringify(error.json().status)) == "203") {
                 _this.wrongCredent();
@@ -53,7 +54,23 @@ var LoginComponent = (function () {
             .modal('show');
     };
     LoginComponent.prototype.facebookLogIn = function () {
-        $('<form action="/signin/facebook" method="POST"></form>').submit();
+        var form = $('<form action="/signin/facebook" method="post"><input type="submit" hidden/></form>');
+        $(document.body).append(form);
+        $('input[type="submit"]', form).click();
+    };
+    LoginComponent.prototype.getToken = function (login, pass) {
+        var _this = this;
+        var body = 'login=' + login + '&password=' + pass;
+        var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        this.http.post(this.url + "/get-token", body, options)
+            .subscribe(function (data) {
+            _this.setToken(data.text());
+            window.location.href = _this.url + "/index.html";
+        }, function (error) { });
+    };
+    LoginComponent.prototype.setToken = function (token) {
+        localStorage.setItem('token', token);
     };
     LoginComponent = __decorate([
         core_1.Component({
@@ -61,7 +78,7 @@ var LoginComponent = (function () {
             templateUrl: './login/login.component.html',
             styleUrls: ['./login/login.component.css'],
         }), 
-        __metadata('design:paramtypes', [http_1.Http, apiurl_model_1.ApiUrl])
+        __metadata('design:paramtypes', [http_1.Http])
     ], LoginComponent);
     return LoginComponent;
 }());

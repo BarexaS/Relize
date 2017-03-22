@@ -1,6 +1,6 @@
 package demo.services.todos;
 
-import demo.app.Todo;
+import demo.app.entities.Todo;
 
 public interface TodosService {
     Todo[] getTodosByUserLogin(String login);

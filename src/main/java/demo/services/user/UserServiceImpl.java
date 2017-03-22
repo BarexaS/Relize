@@ -1,11 +1,12 @@
 package demo.services.user;
 
-import demo.app.CustomUser;
-import demo.app.Todo;
-import demo.app.UserDTO;
-import demo.app.UserRole;
+import demo.app.DTO.UserDTO;
+import demo.app.entities.CustomUser;
+import demo.app.entities.Todo;
+import demo.app.enums.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.social.connect.Connection;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,51 +16,64 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    @Transactional(readOnly = true)
     public CustomUser getUserByLogin(String login) {
         return userRepository.findByLogin(login);
     }
 
     @Override
-    @Transactional
-    public Short addUser(UserDTO userDTO) {
+    public String addUser(UserDTO userDTO) {
         return validateUser(userDTO);
     }
 
     @Override
-    @Transactional
-    public void addSocialUser(CustomUser customUser) {
-        addNewUserData(customUser);
-        userRepository.save(customUser);
+    public void updateUser(CustomUser user) {
+        userRepository.save(user);
     }
 
-    private Short validateUser(UserDTO userDTO) {
+    @Override
+    public CustomUser addSocialUser(Connection<?> connection) {
+        CustomUser user;
+        String login = connection.getDisplayName();
+        while (userRepository.findByLogin(login) != null) {
+           login = login + (int)(Math.random()*10);
+        }
+        user = new CustomUser(login, connection.createData().getProviderUserId(), "null", UserRole.USER);
+        addNewCustomUser(user);
+        return user;
+    }
+
+    private String validateUser(UserDTO userDTO) {
+        String result = "ERROR";
         if (userDTO.getPassword().length() < 7) {
             //Password too short
-            return 2;
+            result = "Password too short";
         } else {
             if (!userDTO.getPassword().equals(userDTO.getRepPassword())) {
-                //Password didn't match
-                return 3;
+                //Passwords didn't match
+                result = "Passwords didn't match";
             } else {
                 try {
                     if (userDTO.getLogin().equalsIgnoreCase(userRepository.findByLogin(userDTO.getLogin()).getLogin())) {
                         //Login exist
-                        return 1;
-                    } else {
-                        throw new NullPointerException();
+                        result = "Login already exist";
                     }
                 } catch (NullPointerException e){
                     //SUCCESS!
                     ShaPasswordEncoder encoder = new ShaPasswordEncoder();
                     String pass = encoder.encodePassword(userDTO.getPassword(), null);
                     CustomUser customUser = new CustomUser(userDTO.getLogin(), pass, userDTO.getSecretWord(), UserRole.USER);
-                    addNewUserData(customUser);
-                    userRepository.save(customUser);
-                    return 0;
+                    addNewCustomUser(customUser);
+                    result = "SUCCESS";
                 }
             }
         }
+        return result;
+    }
+
+    @Transactional
+    private void addNewCustomUser(CustomUser newUser){
+        addNewUserData(newUser);
+        userRepository.save(newUser);
     }
 
     private void addNewUserData(CustomUser newUser) {

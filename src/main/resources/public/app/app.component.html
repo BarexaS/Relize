@@ -3,9 +3,12 @@
         <div class="header item">
             <h1><i class="coffee icon"></i>{{ title }}</h1>
         </div>
+        <h2 align="center" style="align-content: center; margin-left: 35%; margin-top: 1%; margin-bottom: 1%">Welcome, {{ login }} !</h2>
     </div>
+    
     <a class="ui blue icon button" (click)="showTaskForm()"><i class="add to calendar icon"></i> Add task</a>
     <a class="ui blue icon button" (click)="showTodoForm()"><i class="edit icon"></i> Add note</a>
+    <a class="ui blue icon button" (click)="showGroupsForm()"><i class="users icon"></i> Groups</a>
     <a class="ui blue icon button" href="/logout" method="post"><i class="sign out icon"></i> Logout</a>
 </nav>
 <todos></todos>
@@ -22,4 +25,11 @@
         <h2>Adding task...</h2>
     </div>
     <task-add (created)="onTaskCreated($event)"></task-add>
+</div>
+<div class="ui modal" id="groupModal">
+    <i class="close icon"></i>
+    <div class="header" style="text-align: center">
+        <h2>Groups</h2>
+    </div>
+    <groups></groups>
 </div>

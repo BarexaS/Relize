@@ -9,7 +9,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var todo_model_1 = require("../../../shared/todo.model");
 var TodoItem = (function () {
     function TodoItem() {
         this.deleted = new core_1.EventEmitter();
@@ -30,7 +29,7 @@ var TodoItem = (function () {
     };
     __decorate([
         core_1.Input(), 
-        __metadata('design:type', todo_model_1.Todo)
+        __metadata('design:type', Object)
     ], TodoItem.prototype, "todo", void 0);
     __decorate([
         core_1.Output(), 

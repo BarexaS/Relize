@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter, OnInit} from "@angular/core";
-import {ITask} from "../../../shared/task.model";
+import {ITask} from "../../../shared/task/task.model";
 declare var $: any;
 
 @Component({
