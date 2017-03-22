@@ -1,4 +1,4 @@
-package demo.app;
+package demo.app.enums;
 
 public enum UserRole {
     ADMIN, USER;

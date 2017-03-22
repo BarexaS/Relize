@@ -25,6 +25,6 @@ public class UiApplication implements CommandLineRunner {
 		// Создание адресной таблицы файлов
 		String tableName = env.getProperty("database.userfiles.tablename");
 		jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS "+tableName+"("+
-				"id bigint, adress VARCHAR, filename VARCHAR, owner_id bigint, group_id bigint)");
+				"id bigint, address VARCHAR, filename VARCHAR, task_id bigint)");
 	}
 }

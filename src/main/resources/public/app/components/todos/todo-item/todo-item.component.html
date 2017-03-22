@@ -11,5 +11,6 @@
     </div>
     <div *ngIf="showText" class="ui divider"></div>
     <div *ngIf="showText" id="todo-text" (click)="toggleShow()">{{ todo.text }}</div>
+    <a *ngIf="showText" href="/get-file/{{todo.id}}/{{todo.fileId}}">{{ todo.fileName }}</a>
 </div>
 

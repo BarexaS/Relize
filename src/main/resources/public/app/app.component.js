@@ -9,8 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var todo_service_1 = require("./shared/todo.service");
-var task_service_1 = require("./shared/task.service");
+var todo_service_1 = require("./shared/todo/todo.service");
+var task_service_1 = require("./shared/task/task.service");
 var http_1 = require("@angular/http");
 var apiurl_model_1 = require("../login/apiurl.model");
 var AppComponent = (function () {
@@ -31,6 +31,10 @@ var AppComponent = (function () {
         this.todoService.todoCreated(todo);
         $('#todoModal')
             .modal('hide');
+    };
+    AppComponent.prototype.showGroupsForm = function () {
+        $('#groupModal')
+            .modal('show');
     };
     AppComponent.prototype.showTodoForm = function () {
         $('#todoModal')

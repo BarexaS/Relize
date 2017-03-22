@@ -1,8 +1,8 @@
 package demo.controllers;
 
-import demo.app.CustomUser;
 import demo.app.DTO.TaskDTO;
-import demo.app.Task;
+import demo.app.entities.CustomUser;
+import demo.app.entities.Task;
 import demo.services.files.FileService;
 import demo.services.tasks.TaskService;
 import demo.services.user.UserService;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 public class TaskController {
@@ -27,26 +28,24 @@ public class TaskController {
 
     @RequestMapping(value = "/api/tasks", method = RequestMethod.POST)
     public TaskDTO addTask(Principal principal, @RequestParam(value = "file", required = false) MultipartFile file, @RequestPart("task") TaskDTO taskDTO) {
-        System.out.println(taskDTO);
         CustomUser owner = userService.getUserByLogin(principal.getName());
-        if (file != null) {
-            fileService.uploadFile(owner.getId(), file);
-        } else {
-            System.out.println("there is no file!");
-        }
-        String month = taskDTO.getDate().substring(0,taskDTO.getDate().lastIndexOf('-'));
-        Task task = new Task(taskDTO.getTitle(),taskDTO.getDate(), taskDTO.getText(),false,owner, month);
+        Task task = Task.fromDTO(owner, taskDTO);
         Task temp = taskService.addTask(task);
-        taskDTO.setId(temp.getId());
-        return taskDTO;
+        if (file != null) {
+            Long fileId = fileService.uploadFile(temp.getId(), owner.getId(), file);
+            task.setFileId(fileId);
+            task.setFileName(file.getOriginalFilename());
+        }
+        return TaskDTO.taskToDTO(taskService.saveTask(task));
     }
 
     @RequestMapping(value = "/api/tasks/{task_year_month}", method = RequestMethod.GET)
     public TaskDTO[] getTasks(Principal principal, @PathVariable("task_year_month") String yearMonth) {
-        Task[] arrayTasks = taskService.getTasksByUserLoginAndMonth(principal.getName(), yearMonth);
-        TaskDTO[] result = new TaskDTO[arrayTasks.length];
+        CustomUser user = userService.getUserByLogin(principal.getName());
+        List<Task> temp = taskService.getUserTasksByMonth(user, yearMonth);
+        TaskDTO[] result = new TaskDTO[temp.size()];
         for (int i = 0; i < result.length; i++) {
-            result[i] = new TaskDTO(arrayTasks[i].getTitle(), arrayTasks[i].getDate(), arrayTasks[i].getText(), arrayTasks[i].isDone(), arrayTasks[i].getId());
+            result[i] = TaskDTO.taskToDTO(temp.get(i));
         }
         return result;
     }
@@ -63,6 +62,6 @@ public class TaskController {
     public TaskDTO deleteTask(@PathVariable("task_id") long id) {
         Task task = taskService.getTaskById(id);
         taskService.deleteTaskById(id);
-        return new TaskDTO(task.getTitle(), task.getDate(), task.getText(), task.isDone(), task.getId());
+        return TaskDTO.taskToDTO(task);
     }
 }

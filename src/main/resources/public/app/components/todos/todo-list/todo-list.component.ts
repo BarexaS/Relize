@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter} from "@angular/core";
-import {ITodo} from "../../../shared/todo.model";
+import {ITodo} from "../../../shared/todo/todo.model";
 
 
 @Component({

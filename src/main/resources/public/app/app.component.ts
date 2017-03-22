@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {TodoService} from "./shared/todo.service";
-import {ITask} from "./shared/task.model";
-import {TaskService} from "./shared/task.service";
-import {ITodo} from "./shared/todo.model";
+import {TodoService} from "./shared/todo/todo.service";
+import {ITask} from "./shared/task/task.model";
+import {TaskService} from "./shared/task/task.service";
+import {ITodo} from "./shared/todo/todo.model";
 import {Headers, RequestOptions, Http} from "@angular/http";
 import {ApiUrl} from "../login/apiurl.model";
 declare var $: any;
@@ -39,6 +39,12 @@ export class AppComponent {
         this.todoService.todoCreated(todo);
         $('#todoModal')
             .modal('hide')
+        ;
+    }
+
+    showGroupsForm(){
+        $('#groupModal')
+            .modal('show')
         ;
     }
 

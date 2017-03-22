@@ -9,8 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var todo_service_1 = require("../../shared/todo.service");
-var task_service_1 = require("../../shared/task.service");
+var todo_service_1 = require("../../shared/todo/todo.service");
+var task_service_1 = require("../../shared/task/task.service");
 var TodosComponent = (function () {
     function TodosComponent(todoService, taskService) {
         var _this = this;

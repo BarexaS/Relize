@@ -1,8 +1,8 @@
 package demo.controllers;
 
-import demo.app.CustomUser;
 import demo.app.DTO.TodoDTO;
-import demo.app.Todo;
+import demo.app.entities.CustomUser;
+import demo.app.entities.Todo;
 import demo.services.todos.TodosService;
 import demo.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class TodosController {
     }
 
     @RequestMapping(value = "/api/todos", method = RequestMethod.GET)
-    public TodoDTO[] user(Principal principal) {
+    public TodoDTO[] getUsersTodos(Principal principal) {
         Todo[] arrayTodos = todosService.getTodosByUserLogin(principal.getName());
         TodoDTO[] result = new TodoDTO[arrayTodos.length];
         for (int i = 0; i < result.length; i++) {
@@ -48,7 +48,7 @@ public class TodosController {
     }
 
     @RequestMapping(value = "/api/todos/{todo_id}", method = RequestMethod.DELETE)
-    public TodoDTO updateTodo(@PathVariable("todo_id") long id, Principal principal) {
+    public TodoDTO deleteTodo(@PathVariable("todo_id") long id, Principal principal) {
         Todo todo = todosService.getTodo(id);
         if (todo.getOwner().getLogin().equals(principal.getName())) {
             todosService.deleteTodo(id);

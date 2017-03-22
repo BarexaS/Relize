@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var task_service_1 = require("../../shared/task.service");
+var task_service_1 = require("../../shared/task/task.service");
 var TasksComponent = (function () {
     function TasksComponent(taskService) {
         var _this = this;

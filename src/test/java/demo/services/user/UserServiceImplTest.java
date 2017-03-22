@@ -1,8 +1,8 @@
 package demo.services.user;
 
-import demo.app.CustomUser;
 import demo.app.DTO.UserDTO;
-import demo.app.UserRole;
+import demo.app.entities.CustomUser;
+import demo.app.enums.UserRole;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -9,20 +9,26 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 
 @Service
-public class FileRegServiceImpl implements FileRegService{
+public class FileRegServiceImpl implements FileRegService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
     private Environment env;
 
-
-    public Long regtFile(File file) {
+    public Long regFile(File file, Long taskId) {
 //        TODO доделать добавление файлов
         Long timeStamp = System.currentTimeMillis();
         String tableName = env.getProperty("database.userfiles.tablename");
-        jdbcTemplate.update("INSERT INTO "+ tableName+"(id, address, filename, owner_id, group_id) VALUES (?,?,?,?,?)",
-                timeStamp, file.getPath(), file.getName());
+        jdbcTemplate.update("INSERT INTO " + tableName + "(id, address, filename, task_id) VALUES (?,?,?,?)",
+                timeStamp, file.getPath(), file.getName(), taskId);
         return timeStamp;
+    }
+
+    public String getFilePath(Long Id) {
+        String tableName = env.getProperty("database.userfiles.tablename");
+        String filePath = jdbcTemplate.queryForObject("SELECT address FROM " + tableName + " WHERE id = ?",
+                new Object[]{Id}, String.class);
+        return filePath;
     }
 }

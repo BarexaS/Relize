@@ -15,9 +15,18 @@ public class FileServiceImpl implements FileService {
     @Autowired
     private FileRegService fileRegService;
 
-    public Long uploadFile(Long userId, MultipartFile multipartFile) {
-        File file = fileCreating(userId, multipartFile);
-        Long result = fileRegService.regtFile(file);
+    public Long uploadFile(Long taskId, Long ownerId, MultipartFile multipartFile) {
+        File file = fileCreating(ownerId, multipartFile);
+        Long result = fileRegService.regFile(file, taskId);
+        return result;
+    }
+
+    public File getFile(Long id) {
+        String filePath = fileRegService.getFilePath(id);
+        File file = new File(filePath);
+        if (file.exists()){
+            return file;
+        }
         return null;
     }
 
@@ -26,8 +35,7 @@ public class FileServiceImpl implements FileService {
         File file = new File(userDir.getPath()+"/"+multipartFile.getOriginalFilename());
         try(FileOutputStream writer = new FileOutputStream(file))
         {
-            if (!file.exists()){
-                System.out.println("File created - "+file.createNewFile());
+            if (file.exists()){
                 writer.write(multipartFile.getBytes());
                 writer.flush();
             }
@@ -47,7 +55,5 @@ public class FileServiceImpl implements FileService {
         return userDir;
     }
 
-    public File getFile(Long id) {
-        return null;
-    }
+
 }

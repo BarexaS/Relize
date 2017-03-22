@@ -1,7 +1,7 @@
 package demo.controllers;
 
-import demo.app.CustomUser;
 import demo.app.DTO.UserDTO;
+import demo.app.entities.CustomUser;
 import demo.services.token.GetTokenService;
 import demo.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

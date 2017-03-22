@@ -54,7 +54,9 @@ var LoginComponent = (function () {
             .modal('show');
     };
     LoginComponent.prototype.facebookLogIn = function () {
-        $('<form action="/signin/facebook" method="POST"></form>').submit();
+        var form = $('<form action="/signin/facebook" method="post"><input type="submit" hidden/></form>');
+        $(document.body).append(form);
+        $('input[type="submit"]', form).click();
     };
     LoginComponent.prototype.getToken = function (login, pass) {
         var _this = this;

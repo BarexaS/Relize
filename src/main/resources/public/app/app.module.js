@@ -12,17 +12,19 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var app_component_1 = require("./app.component");
-var todo_service_1 = require("./shared/todo.service");
+var todo_service_1 = require("./shared/todo/todo.service");
 var todos_component_1 = require("./components/todos/todos.component");
 var todo_form_component_1 = require("./components/todos/todo-form/todo-form.component");
 var todo_item_component_1 = require("./components/todos/todo-item/todo-item.component");
 var todo_list_component_1 = require("./components/todos/todo-list/todo-list.component");
 var http_1 = require("@angular/http");
-var task_service_1 = require("./shared/task.service");
+var task_service_1 = require("./shared/task/task.service");
 var task_form_components_1 = require("./components/tasks/task-form/task-form.components");
 var tasks_component_1 = require("./components/tasks/tasks.component");
 var day_component_1 = require("./components/tasks/day/day.component");
 var apiurl_model_1 = require("../login/apiurl.model");
+var groups_component_1 = require("./components/groups/groups.component");
+var group_service_1 = require("./shared/group/group.service");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -41,12 +43,14 @@ var AppModule = (function () {
                 day_component_1.DayComponent,
                 todo_form_component_1.TodoFormComponent,
                 todo_item_component_1.TodoItem,
-                todo_list_component_1.TodoListComponent
+                todo_list_component_1.TodoListComponent,
+                groups_component_1.GroupsComponent
             ],
             providers: [
                 apiurl_model_1.ApiUrl,
                 todo_service_1.TodoService,
                 task_service_1.TaskService,
+                group_service_1.GroupService,
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

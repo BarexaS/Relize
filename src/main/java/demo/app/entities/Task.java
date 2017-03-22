@@ -1,4 +1,6 @@
-package demo.app;
+package demo.app.entities;
+
+import demo.app.DTO.TaskDTO;
 
 import javax.persistence.*;
 
@@ -12,12 +14,23 @@ public class Task {
     private String text;
     private boolean done;
     private String monthForSearch;
+    @Column(nullable = true)
+    private Long groupId;
+    @Column(nullable = true)
+    private Long fileId;
+    @Column(nullable = true)
+    private String fileName;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private CustomUser owner;
 
-    public Task(String title,String date, String text, boolean done, CustomUser owner, String monthForSearch) {
+    public static Task fromDTO(CustomUser owner, TaskDTO taskDTO){
+        String month = taskDTO.getDate().substring(0,taskDTO.getDate().lastIndexOf('-'));
+        return new Task(taskDTO.getTitle(),taskDTO.getDate(), taskDTO.getText(),false,owner, month, taskDTO.getGroupId(), taskDTO.getFileName());
+    }
+
+    public Task(String title,String date, String text, boolean done, CustomUser owner, String monthForSearch, Long groupId, String fileName) {
         this.title = title;
         this.date = date;
         this.text = text;
@@ -25,6 +38,8 @@ public class Task {
         this.owner = owner;
         owner.addTask(this);
         this.monthForSearch = monthForSearch;
+        this.groupId = groupId;
+        this.fileName = fileName;
     }
 
     public String getMonthForSearch() {
@@ -80,6 +95,30 @@ public class Task {
 
     public void setOwner(CustomUser owner) {
         this.owner = owner;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
+
+    public Long getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(Long fileId) {
+        this.fileId = fileId;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     @Override

@@ -1,9 +1,9 @@
 package demo.services.user;
 
-import demo.app.CustomUser;
 import demo.app.DTO.UserDTO;
-import demo.app.Todo;
-import demo.app.UserRole;
+import demo.app.entities.CustomUser;
+import demo.app.entities.Todo;
+import demo.app.enums.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.social.connect.Connection;
@@ -23,6 +23,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public String addUser(UserDTO userDTO) {
         return validateUser(userDTO);
+    }
+
+    @Override
+    public void updateUser(CustomUser user) {
+        userRepository.save(user);
     }
 
     @Override

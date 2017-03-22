@@ -1,11 +1,12 @@
 "use strict";
 var Task = (function () {
-    function Task(title, date, text) {
+    function Task(title, date, text, groupId) {
         this.title = title;
         this.done = false;
         this.text = text;
         this.date = date;
         this.id = 0;
+        this.groupId = groupId;
     }
     return Task;
 }());

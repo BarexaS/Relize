@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
-import {ITask} from "../../shared/task.model";
-import {TaskService} from "../../shared/task.service";
+import {ITask} from "../../shared/task/task.model";
+import {TaskService} from "../../shared/task/task.service";
 
 
 @Component({

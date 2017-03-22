@@ -12,7 +12,7 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var Rx_1 = require("rxjs/Rx");
 require("rxjs/Rx");
-var apiurl_model_1 = require("../../login/apiurl.model");
+var apiurl_model_1 = require("../../../login/apiurl.model");
 var TaskService = (function () {
     function TaskService(http) {
         this.http = http;
@@ -23,26 +23,12 @@ var TaskService = (function () {
     }
     TaskService.prototype.extractData = function (res) {
         var body = res.json();
+        this.filesToUpload = null;
         return body || {};
     };
     TaskService.prototype.taskCreated = function (task) {
         this.onAdded$.emit(task);
     };
-    //
-    // addTask(task:ITask):Observable<ITask> {
-    //     console.log(task);
-    //     let body = JSON.stringify(task);
-    //     let headers = new Headers({'Content-Type': 'application/json'});
-    //     headers.append('token',this.token);
-    //     let options = new RequestOptions({headers});
-    //
-    //     return this.http.post(this.apiUrl, body, options)
-    //         .map(this.extractData)
-    //         .catch(error => {
-    //             console.error(error);
-    //             return Observable.throw(error.json())
-    //         })
-    // }
     TaskService.prototype.addTask = function (task) {
         var formData = new FormData();
         if (this.filesToUpload !== undefined) {
@@ -54,6 +40,7 @@ var TaskService = (function () {
         var headers = new http_1.Headers({
             'token': this.token,
         });
+        this.filesToUpload = undefined;
         return this.http.post(this.apiUrl, formData, { headers: headers })
             .map(this.extractData)
             .catch(function (error) {

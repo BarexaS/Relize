@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
-import {ITodo} from "../../shared/todo.model";
-import {TodoService} from "../../shared/todo.service";
-import {TaskService} from "../../shared/task.service";
+import {ITodo} from "../../shared/todo/todo.model";
+import {TodoService} from "../../shared/todo/todo.service";
+import {TaskService} from "../../shared/task/task.service";
 
 
 @Component({

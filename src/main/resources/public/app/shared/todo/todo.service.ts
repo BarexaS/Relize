@@ -3,7 +3,7 @@ import {Http, Headers, RequestOptions, Response} from "@angular/http";
 import "rxjs/Rx";
 import {ITodo} from "./todo.model";
 import {Observable} from "rxjs/Rx";
-import {ApiUrl} from "../../login/apiurl.model";
+import {ApiUrl} from "../../../login/apiurl.model";
 
 
 @Injectable()

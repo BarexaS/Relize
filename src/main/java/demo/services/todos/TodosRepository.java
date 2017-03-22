@@ -1,6 +1,6 @@
 package demo.services.todos;
 
-import demo.app.Todo;
+import demo.app.entities.Todo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

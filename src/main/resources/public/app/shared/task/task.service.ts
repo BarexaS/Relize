@@ -3,7 +3,7 @@ import {Http, Headers, RequestOptions, Response} from "@angular/http";
 import {Observable} from "rxjs/Rx";
 import {ITask} from "./task.model";
 import "rxjs/Rx";
-import {ApiUrl} from "../../login/apiurl.model";
+import {ApiUrl} from "../../../login/apiurl.model";
 declare var $: any;
 
 
@@ -25,28 +25,13 @@ export class TaskService {
 
     private extractData(res: Response) {
         let body = res.json();
+        this.filesToUpload = null;
         return body || { };
     }
 
     taskCreated(task:ITask):void{
         this.onAdded$.emit(task);
     }
-    //
-    // addTask(task:ITask):Observable<ITask> {
-    //     console.log(task);
-    //     let body = JSON.stringify(task);
-    //     let headers = new Headers({'Content-Type': 'application/json'});
-    //     headers.append('token',this.token);
-    //     let options = new RequestOptions({headers});
-    //
-    //     return this.http.post(this.apiUrl, body, options)
-    //         .map(this.extractData)
-    //         .catch(error => {
-    //             console.error(error);
-    //             return Observable.throw(error.json())
-    //         })
-    // }
-
 
     addTask(task:ITask):Observable<ITask>{
         let formData = new FormData();
@@ -59,12 +44,14 @@ export class TaskService {
         let headers = new Headers({
             'token': this.token,
         });
+        this.filesToUpload = undefined;
         return this.http.post(this.apiUrl, formData, {headers})
             .map(this.extractData)
             .catch(error => {
                 console.error(error);
                 return Observable.throw(error.json())
             });
+
     }
 
     saveTask(task:ITask) : Observable<ITask> {

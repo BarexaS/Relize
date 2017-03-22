@@ -6,6 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 
 public interface FileService {
-    Long uploadFile(Long userId, MultipartFile file);
+    Long uploadFile(Long taskId, Long ownerId, MultipartFile file);
     File getFile(Long id);
 }

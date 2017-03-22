@@ -1,6 +1,6 @@
 package demo.services.user;
 
-import demo.app.CustomUser;
+import demo.app.entities.CustomUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

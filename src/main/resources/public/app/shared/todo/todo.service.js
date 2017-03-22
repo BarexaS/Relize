@@ -12,7 +12,7 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/Rx");
 var Rx_1 = require("rxjs/Rx");
-var apiurl_model_1 = require("../../login/apiurl.model");
+var apiurl_model_1 = require("../../../login/apiurl.model");
 var TodoService = (function () {
     function TodoService(http, apiurl) {
         this.http = http;

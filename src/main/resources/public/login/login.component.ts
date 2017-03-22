@@ -57,7 +57,9 @@ export class LoginComponent {
     }
 
     facebookLogIn(){
-        $('<form action="/signin/facebook" method="POST"></form>').submit();
+        var form = $('<form action="/signin/facebook" method="post"><input type="submit" hidden/></form>');
+        $(document.body).append(form);
+        $('input[type="submit"]', form).click();
     }
 
     getToken(login:string, pass:string){
