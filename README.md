@@ -20,7 +20,7 @@ Spring Social used for imlement social sign up and sign in (in this project Spri
 
 User can choose sign up by social servics or by login form.
 
-Spring Data used to creat entities repository (DAO layer).
+Spring Data used to creat entities repository (DAO layer). All entities except user files use Spring repositories. Users files stored by server as a common file only it's location at server writing to data base. User file binding to task and only user that can see this task can download file.
 
 Any files, that uploaded by users storing only for 30 days. File cleaner running asycnroniusly in separate thread, it sleeps for 30 days.
 
